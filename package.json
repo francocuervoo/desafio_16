@@ -5,7 +5,7 @@
   "main": "index.js",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "nodemon --inspect ./src/express.js"
+    "start": "nodemon --inspect ./express.js"
   },
   "keywords": [],
   "author": "",
@@ -16,6 +16,7 @@
   },
   "dependencies": {
     "express": "^4.17.1",
-    "express-handlebars": "^5.3.3"
+    "express-handlebars": "^5.3.3",
+    "socket.io": "^4.1.3"
   }
 }

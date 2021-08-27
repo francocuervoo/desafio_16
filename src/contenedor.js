@@ -171,7 +171,7 @@ async function allFunctionsContenedor() {
   //await objetoContenedor.deleteAll();
 }
 
-//const objetoContenedor = new Contenedor("productos.json");
+//const objetoContenedor = new Contenedor("./src/data/productos.json");
 
 allFunctionsContenedor();
 
