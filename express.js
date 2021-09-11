@@ -2,11 +2,11 @@
 
 // Instance server (socket.io doc version)
 const express = require("express"); // Import express
-const http = require("http");
 const app = express(); // Server app
+const http = require("http");
 const server = http.createServer(app);
 const { Server } = require("socket.io");
-const io = new Server(server)
+const io = new Server(server);
 const PORT = 8081;
 
 server.listen(PORT, () => {
@@ -24,13 +24,12 @@ const contMensajes = new Contenedor("./src/data/mensajes.json"); // Nueva instan
 io.on("connection", async (socket) => {
   // Productos
   const products = await contProductos.getAll();
-
   socket.emit("productos", products);
 
   // Guardar productos
   socket.on("update", async (producto) => {
     await contProductos.save(producto);
-    io.socket.emit("productos", products);
+    io.emit("productos", products);
   });
 
   // Mensajes
@@ -43,16 +42,14 @@ io.on("connection", async (socket) => {
   socket.on("nuevoMensaje", async (msg) => {
     msg.fyh = new Date().toLocaleString();
     await contMensajes.save(msg); // Save también sirve para guardar mensajes, no necesariamente solo productos
-    io.socket.emit("mensajes", messages);
+    io.emit("mensajes", messages);
   });
 });
 
-
 // Middlewares
-app.use(express.json())
+app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public")); // Static file folder
-
 
 // Handlebars
 const handlebars = require("express-handlebars");
@@ -66,7 +63,6 @@ app.engine(
     layoutsDir: __dirname + "/views",
     extname: "hbs",
     defaultLayout: "layoutFrame",
-
   })
 );
 app.get("/hbs", (req, res) => {

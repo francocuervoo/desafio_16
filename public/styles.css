@@ -1,3 +1,11 @@
 * {
   font-family: "Poppins", sans-serif;
 }
+
+#productForm{
+  padding: 5rem!important;
+}
+
+.listProducts{
+  padding: 0 5rem 5rem 5rem;
+}

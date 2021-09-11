@@ -1,3 +1,4 @@
+// eslint-disable-next-line no-undef
 const socket = io.connect();
 
 // Products
@@ -28,11 +29,11 @@ const tableRows = (products) =>
       (p) =>
         `
         <tr>
-            <td><h3>${p.title}</h3></td>
-            <td><h4>$${p.price}</h4></td>
+            <td>${p.title}</td>
+            <td>$${p.price}</td>
             <td><img style="width:2rem;" class="img-thumbnail" src=${p.thumbnail}></img></td>                        
         </tr>
-    `
+      `
     )
     .reverse() // Invierte el orden del map
     .join(" "); // Saca la , que genera
@@ -56,7 +57,7 @@ messageForm.addEventListener("submit", (e) => {
   };
 
   //Emito nuevo mensaje
-  socket.emit("nuevaMensaje", msg);
+  socket.emit("nuevoMensaje", msg);
 
   //Resetear formulario:
   messageForm.reset();
@@ -76,11 +77,11 @@ const listaMensajes = (mensajes) =>
     .map(
       (msg) =>
         `
-    <div>
-        <b style="color: blue;">${msg.author}</b>
-        [<span style="color: brown;">${msg.fyh}</span>]:
-        <i style="color:green;">${msg.text}</i>
-    </div>
+      <div>
+          <b style="color: blue;">${msg.author}</b>
+          [<span style="color: brown;">${msg.fyh}</span>]:
+          <i style="color:green;">${msg.text}</i>
+      </div>
     `
     )
     .join(" ");
