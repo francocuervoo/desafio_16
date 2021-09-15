@@ -1,6 +1,6 @@
 import { db } from "./db.js";
 
-(async function () {
+async function createTableProducts() {
   try {
     const existTableProducts = await db.schema.hasTable("productos");
     if (!existTableProducts) {
@@ -21,4 +21,4 @@ import { db } from "./db.js";
   } finally {
     db.destroy();
   }
-})();
+}

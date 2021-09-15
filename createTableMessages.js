@@ -1,6 +1,6 @@
-import { db } from "./db.js";
+import { db } from "./dbSqlite.js";
 
-(async function () {
+(async function createTableProducts() {
   try {
     const existTableMessages = await db.schema.hasTable("mensajes");
     if (!existTableMessages) {
@@ -18,3 +18,4 @@ import { db } from "./db.js";
     db.destroy();
   }
 })();
+
