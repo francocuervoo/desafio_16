@@ -9,3 +9,7 @@ async function getAll() {
     console.log("Error al leer los productos", error);
   }
 }
+
+getAll()
+  .then((res) => console.log(res))
+  .catch((error) => console.log(error));

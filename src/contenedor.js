@@ -8,7 +8,8 @@ class Contenedor {
     this.data = [];
   }
   // Contenedor Methods
-  async save(product) { // Save product
+  async save(product) {
+    // Save product
     await this.getAll();
     this.id++;
     product.id = this.id;
@@ -25,18 +26,18 @@ class Contenedor {
     }
   }
 
-  async saveList(nuevaLista){ // Guardo lista
-    try{
-      await fs.promises.writeFile(this.fileName, nuevaLista) // Save file JSON
-      console.log('El archivo fue guardado con éxito.');
-      
-    }
-    catch (error){
-      console.log(error)
+  async saveList(nuevaLista) {
+    // Guardo lista
+    try {
+      await fs.promises.writeFile(this.fileName, nuevaLista); // Save file JSON
+      console.log("El archivo fue guardado con éxito.");
+    } catch (error) {
+      console.log(error);
     }
   }
 
-  async getById(id) { // Get product by id
+  async getById(id) {
+    // Get product by id
     await this.getAll();
     try {
       const objetoId = this.data.find((dat) => dat.id == id); // Search object id
@@ -49,7 +50,8 @@ class Contenedor {
     }
   }
 
-  async getAll() { //Get all productos
+  async getAll() {
+    //Get all productos
     try {
       const data = await fs.promises.readFile(this.fileName, "utf-8");
       if (data) {
@@ -64,7 +66,8 @@ class Contenedor {
     }
   }
 
-  async deleteById(id) { //Delete product by id
+  async deleteById(id) {
+    //Delete product by id
     try {
       const data = await fs.promises.readFile(this.fileName, "utf-8");
       if (data) {
@@ -77,14 +80,15 @@ class Contenedor {
           JSON.stringify(objetoSinId, null, 2)
         );
         console.log(`El producto con el id ${id} fue eliminado.`);
-        return id
+        return id;
       }
     } catch (error) {
-      console.log(error)
+      console.log(error);
     }
   }
 
-  async deleteAll() { // Delete all
+  async deleteAll() {
+    // Delete all
     this.data = [];
     try {
       await fs.promises.writeFile(
@@ -101,9 +105,9 @@ class Contenedor {
     // Busco qué posición en el array de productos tiene el producto con el id buscado
     // Tiene que ser doble == ya que solo necesito comparar el valor y no el tipo
     let lista = await this.getAll();
-    
+
     // FindIndex toma todos los elementos de la lista y comparara el id del producto con el id del parámetro
-    const index = lista.findIndex(product => product.id == id);
+    const index = lista.findIndex((product) => product.id == id);
 
     // Uso let ya que va a sufrir cambios la variable
     // Los corchetes buscan el orden dentro del array
@@ -122,19 +126,16 @@ class Contenedor {
         //Inserto el producto modificado en la lista
         lista[index] = producto;
 
-        const nuevaListaJson = JSON.stringify(lista , null, 2);
-        await this.saveList(nuevaListaJson)
+        const nuevaListaJson = JSON.stringify(lista, null, 2);
+        await this.saveList(nuevaListaJson);
 
-        return producto
-
+        return producto;
       }
-    }
-    catch  {
+    } catch {
       return null;
     }
   }
 }
-
 
 //Productos
 // let p1 = {
@@ -175,4 +176,4 @@ async function allFunctionsContenedor() {
 
 allFunctionsContenedor();
 
-module.exports = Contenedor;
+export default Contenedor;

@@ -10,3 +10,7 @@ async function deleteById(id) {
     db.destroy();
   }
 }
+
+deleteById(2)
+  .then((res) => console.log(res))
+  .catch((error) => console.log(error));

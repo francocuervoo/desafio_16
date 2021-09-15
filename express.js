@@ -1,11 +1,11 @@
 /* eslint-disable no-undef */
 
 // Instance server (socket.io doc version)
-const express = require("express"); // Import express
+import express from "express";
 const app = express(); // Server app
-const http = require("http");
+import http from "http";
 const server = http.createServer(app);
-const { Server } = require("socket.io");
+import { Server } from "socket.io";
 const io = new Server(server);
 const PORT = 8081;
 
@@ -16,7 +16,8 @@ server.listen(PORT, () => {
 });
 
 // Contenedor Class - One instance for products and one for messages
-const Contenedor = require("./src/contenedor.js");
+import Contenedor from "./src/contenedor.js";
+
 const contProductos = new Contenedor("./src/data/productos.json"); // Nueva instancia de la clase contenedor
 const contMensajes = new Contenedor("./src/data/mensajes.json"); // Nueva instancia de la clase contenedor
 
@@ -52,7 +53,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public")); // Static file folder
 
 // Handlebars
-const handlebars = require("express-handlebars");
+import handlebars  from "express-handlebars";
 
 // Seteo le engine que voy a usar y la extensión (hbs)
 app.set("view engine", "hbs");

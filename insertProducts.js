@@ -47,3 +47,7 @@ async function saveProducts() {
     db.destroy();
   }
 }
+
+saveProducts()
+  .then((res) => console.log(res))
+  .catch((error) => console.log(error));
