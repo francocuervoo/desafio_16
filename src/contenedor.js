@@ -1,4 +1,4 @@
-const fs = require("fs"); // Import module fs
+import fs from "fs"; // Import module fs
 
 // Contenedor class
 class Contenedor {

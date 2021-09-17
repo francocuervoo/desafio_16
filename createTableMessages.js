@@ -19,6 +19,6 @@ async function createTableMessages(tableName) {
   }
 }
 
-createTableMessages("test 2")
+createTableMessages("test2")
   .then((res) => console.log(res))
   .catch((error) => console.log(error));
