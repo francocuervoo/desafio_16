@@ -1,5 +1,3 @@
-/* eslint-disable no-undef */
-
 // Instance server (socket.io doc version)
 import express from "express";
 const app = express(); // Server app
@@ -53,7 +51,7 @@ app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public")); // Static file folder
 
 // Handlebars
-import handlebars  from "express-handlebars";
+import handlebars from "express-handlebars";
 
 // Seteo le engine que voy a usar y la extensión (hbs)
 app.set("view engine", "hbs");
