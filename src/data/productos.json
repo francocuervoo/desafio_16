@@ -22,5 +22,17 @@
     "price": "36999",
     "thumbnail": "https://images.fravega.com/s500/3c1490751561f1481eafff5417c23663.jpg",
     "id": 4
+  },
+  {
+    "title": "test-18-9",
+    "price": "20000",
+    "thumbnail": "https://images.fravega.com/s500/0ec3af99701dbf0665ec61ea3816b028.jpg",
+    "id": 5
+  },
+  {
+    "title": "test-18-B",
+    "price": "2000",
+    "thumbnail": "https://images.fravega.com/s500/0ec3af99701dbf0665ec61ea3816b028.jpg",
+    "id": 6
   }
 ]

@@ -1,4 +1,4 @@
-import { db } from "./db.js";
+import { db } from "../db.js";
 
 const products = [
   {
@@ -39,7 +39,7 @@ const products = [
 async function saveProducts() {
   try {
     const response = await db.insert(products).from("productos");
-    console.log("Productos insertados");
+    console.log("Producto insertado");
     return response;
   } catch (error) {
     console.log("Error al insertar productos", error);

@@ -59,7 +59,7 @@ app.engine(
   // Configuración del HBS
   "hbs",
   handlebars({
-    layoutsDir: __dirname + "/views",
+    layoutsDir: "./views",
     extname: "hbs",
     defaultLayout: "layoutFrame",
   })

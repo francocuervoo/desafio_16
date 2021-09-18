@@ -137,42 +137,8 @@ class Contenedor {
   }
 }
 
-//Productos
-// let p1 = {
-//   title: "Heladera",
-//   price: 80000,
-//   thumbnail: "https://imgur.com/GkEYT7d",
-// };
-
-// let p2 = {
-//   title: "Lavarropas",
-//   price: 60000,
-//   thumbnail: "https://imgur.com/RRNmknL",
-// };
-// let p3 = {
-//   title: "Microondas",
-//   price: 40000,
-//   thumbnail: "https://imgur.com/gSBY8op",
-// };
-
-// let p4 = {
-//   title: "Televisor",
-//   price: 70000,
-//   thumbnail: "https://imgur.com/oCD5WBs",
-// };
-
 async function allFunctionsContenedor() {
-  // await objetoContenedor.save(p1);
-  // await objetoContenedor.save(p2);
-  // await objetoContenedor.save(p3);
-  // await objetoContenedor.save(p4);
-  // await objetoContenedor.getAll();
-  //await objetoContenedor.getById(3);
-  //await objetoContenedor.deleteById(5);
-  //await objetoContenedor.deleteAll();
 }
-
-//const objetoContenedor = new Contenedor("./src/data/productos.json");
 
 allFunctionsContenedor();
 
