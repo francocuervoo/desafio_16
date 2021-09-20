@@ -1,6 +1,7 @@
 // Instance server (socket.io doc version)
 import express from "express";
 const app = express(); // Server app
+import { db } from "./db.js";
 import http from "http";
 const server = http.createServer(app);
 import { Server } from "socket.io";
@@ -16,8 +17,8 @@ server.listen(PORT, () => {
 // Contenedor Class - One instance for products and one for messages
 import Contenedor from "./src/contenedor.js";
 
-const contProductos = new Contenedor("./src/data/productos.json"); // Nueva instancia de la clase contenedor
-const contMensajes = new Contenedor("./src/data/mensajes.json"); // Nueva instancia de la clase contenedor
+const contProductos = new Contenedor(db, "productos"); // Nueva instancia de la clase contenedor
+const contMensajes = new Contenedor(db, "mensajes"); // Nueva instancia de la clase contenedor
 
 // Socket.io
 io.on("connection", async (socket) => {

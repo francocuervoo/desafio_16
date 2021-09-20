@@ -3,15 +3,14 @@ import knex from "knex";
 // Contenedor class
 class Contenedor {
   constructor() {
-    // this.fileName = fileName;
-    // this.id = 0;
-    // this.data = [];
+    this.knex = knex(config);
+    this.tabla = tabla;
   }
   // Contenedor Methods
   async save(product) {
     // Save product
     try {
-      await knex.insert(product).from("productos");
+      await knex.insert(product).from(tabla);
       return "Producto guardado";
     } catch (error) {
       console.log(error);
@@ -67,14 +66,21 @@ class Contenedor {
     let newTitle = newProduct.title;
     let newPrice = newProduct.price;
     let newThumbnail = newProduct.thumbnail;
-    let newStock = newProduct.stock;   
-    let newDescription = newProduct.description;  
-    let newCode = newProduct.code;    
+    let newStock = newProduct.stock;
+    let newDescription = newProduct.description;
+    let newCode = newProduct.code;
     try {
       await knex
         .from("productos")
         .where("id", id)
-        .update({title: newTitle, price: newPrice, thumbnail: newThumbnail, stock: newStock, description: newDescription, code: newCode})
+        .update({
+          title: newTitle,
+          price: newPrice,
+          thumbnail: newThumbnail,
+          stock: newStock,
+          description: newDescription,
+          code: newCode,
+        });
       return "Producto actualizado";
     } catch (error) {
       console.log("Error al actualizar los productos", error);
