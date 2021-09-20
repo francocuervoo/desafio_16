@@ -1,36 +1,18 @@
-import fs from "fs"; // Import module fs
+import knex from "knex";
 
 // Contenedor class
 class Contenedor {
-  constructor(fileName) {
-    this.fileName = fileName;
-    this.id = 0;
-    this.data = [];
+  constructor() {
+    // this.fileName = fileName;
+    // this.id = 0;
+    // this.data = [];
   }
   // Contenedor Methods
   async save(product) {
     // Save product
-    await this.getAll();
-    this.id++;
-    product.id = this.id;
-    this.data.push(product);
     try {
-      await fs.promises.writeFile(
-        this.fileName,
-        JSON.stringify(this.data, null, 2)
-      );
-      console.log("El id del objeto ingresado es", this.id);
-      return this.id; // Return id
-    } catch (error) {
-      console.log(error);
-    }
-  }
-
-  async saveList(nuevaLista) {
-    // Guardo lista
-    try {
-      await fs.promises.writeFile(this.fileName, nuevaLista); // Save file JSON
-      console.log("El archivo fue guardado con éxito.");
+      await knex.insert(product).from("productos");
+      return "Producto guardado";
     } catch (error) {
       console.log(error);
     }
@@ -38,108 +20,66 @@ class Contenedor {
 
   async getById(id) {
     // Get product by id
-    await this.getAll();
     try {
-      const objetoId = this.data.find((dat) => dat.id == id); // Search object id
-      if (objetoId) {
-        console.log("El objeto con el id", id, "es", objetoId);
-        return objetoId;
+      await knex
+        .select("title", "price", "id")
+        .from("productos")
+        .where("id", id);
+      for (row of rows) {
+        return `${row["id"]} ${row["title"]} ${row["price"]}`;
       }
     } catch (error) {
-      return null;
+      console.log(error);
     }
   }
 
   async getAll() {
     //Get all productos
     try {
-      const data = await fs.promises.readFile(this.fileName, "utf-8");
-      if (data) {
-        this.data = JSON.parse(data); // Data to object
-        this.data.map((producto) => {
-          if (this.id < producto.id) this.id = producto.id; // Nax id in the file
-        });
-        return this.data;
-      }
+      const productos = await knex.select("*").from("productos");
+      return productos;
     } catch (error) {
-      return;
+      console.log(error);
     }
   }
 
   async deleteById(id) {
     //Delete product by id
     try {
-      const data = await fs.promises.readFile(this.fileName, "utf-8");
-      if (data) {
-        this.data = JSON.parse(data); // Data to object
-        // New array without the object with the id
-        const objetoSinId = this.data.filter((dat) => dat.id != id);
-        // Save the new array in the file
-        await fs.promises.writeFile(
-          this.fileName,
-          JSON.stringify(objetoSinId, null, 2)
-        );
-        console.log(`El producto con el id ${id} fue eliminado.`);
-        return id;
-      }
+      await knex.from("productos").del().where("id", `${id}`);
+      return "Producto borrado";
     } catch (error) {
-      console.log(error);
+      console.log("Error al borrar el producto", error);
     }
   }
 
   async deleteAll() {
     // Delete all
-    this.data = [];
     try {
-      await fs.promises.writeFile(
-        this.fileName,
-        JSON.stringify(this.data, null, 2)
-      );
-      return console.log("Se borraron todos los objetos del archivo");
+      await knex.from("productos").del();
+      return "Todos los productos borrados";
     } catch (error) {
-      console.log(error);
+      console.log("Error al borrar todos los productos", error);
     }
   }
 
   async updateById(id, newProduct) {
-    // Busco qué posición en el array de productos tiene el producto con el id buscado
-    // Tiene que ser doble == ya que solo necesito comparar el valor y no el tipo
-    let lista = await this.getAll();
-
-    // FindIndex toma todos los elementos de la lista y comparara el id del producto con el id del parámetro
-    const index = lista.findIndex((product) => product.id == id);
-
-    // Uso let ya que va a sufrir cambios la variable
-    // Los corchetes buscan el orden dentro del array
-    let producto = lista[index];
-
+    let newTitle = newProduct.title;
+    let newPrice = newProduct.price;
+    let newThumbnail = newProduct.thumbnail;
+    let newStock = newProduct.stock;   
+    let newDescription = newProduct.description;  
+    let newCode = newProduct.code;    
     try {
-      if (producto) {
-        //Desestructuración del nuevo producto
-        const { title, price, thumbnail } = newProduct;
-
-        //Actualizo los datos
-        producto.title = title;
-        producto.price = price;
-        producto.thumbnail = thumbnail;
-
-        //Inserto el producto modificado en la lista
-        lista[index] = producto;
-
-        const nuevaListaJson = JSON.stringify(lista, null, 2);
-        await this.saveList(nuevaListaJson);
-
-        return producto;
-      }
-    } catch {
-      return null;
+      await knex
+        .from("productos")
+        .where("id", id)
+        .update({title: newTitle, price: newPrice, thumbnail: newThumbnail, stock: newStock, description: newDescription, code: newCode})
+      return "Producto actualizado";
+    } catch (error) {
+      console.log("Error al actualizar los productos", error);
     }
   }
 }
-
-async function allFunctionsContenedor() {
-}
-
-allFunctionsContenedor();
 
 export default Contenedor;
