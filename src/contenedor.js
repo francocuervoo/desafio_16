@@ -2,7 +2,7 @@ import knex from "knex";
 
 // Contenedor class
 class Contenedor {
-  constructor() {
+  constructor(config, tabla) {
     this.knex = knex(config);
     this.tabla = tabla;
   }
@@ -87,5 +87,12 @@ class Contenedor {
     }
   }
 }
+
+class Productos extends Contenedor{
+}
+class Mensajes extends Contenedor{
+  
+}
+
 
 export default Contenedor;

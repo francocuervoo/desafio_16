@@ -1,4 +1,4 @@
-import { db } from "../dbSqlite.js";
+import { db } from "./dbSqlite.js";
 
 async function createTableMessages(tableName) {
   try {
