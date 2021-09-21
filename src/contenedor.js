@@ -2,15 +2,15 @@ import knex from "knex";
 
 // Contenedor class
 class Contenedor {
-  constructor(config, tabla) {
-    this.knex = knex(config);
+  constructor(db, tabla) {
+    this.knex = db;
     this.tabla = tabla;
   }
   // Contenedor Methods
   async save(product) {
     // Save product
     try {
-      await knex.insert(product).from(tabla);
+      await this.knex.insert(product).from(this.tabla);
       return "Producto guardado";
     } catch (error) {
       console.log(error);
@@ -20,7 +20,7 @@ class Contenedor {
   async getById(id) {
     // Get product by id
     try {
-      await knex
+      await this.knex
         .select("title", "price", "id")
         .from("productos")
         .where("id", id);
@@ -35,7 +35,7 @@ class Contenedor {
   async getAll() {
     //Get all productos
     try {
-      const productos = await knex.select("*").from("productos");
+      const productos = await this.knex.select("*").from("productos");
       return productos;
     } catch (error) {
       console.log(error);
@@ -45,7 +45,7 @@ class Contenedor {
   async deleteById(id) {
     //Delete product by id
     try {
-      await knex.from("productos").del().where("id", `${id}`);
+      await this.knex.from("productos").del().where("id", `${id}`);
       return "Producto borrado";
     } catch (error) {
       console.log("Error al borrar el producto", error);
@@ -55,7 +55,7 @@ class Contenedor {
   async deleteAll() {
     // Delete all
     try {
-      await knex.from("productos").del();
+      await this.knex.from("productos").del();
       return "Todos los productos borrados";
     } catch (error) {
       console.log("Error al borrar todos los productos", error);
@@ -70,7 +70,7 @@ class Contenedor {
     let newDescription = newProduct.description;
     let newCode = newProduct.code;
     try {
-      await knex
+      await this.knex
         .from("productos")
         .where("id", id)
         .update({

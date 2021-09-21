@@ -14,7 +14,7 @@ server.listen(PORT, () => {
   );
 });
 
-// Contenedor Class - One instance for products and one for messages
+// Contenedor Class
 import Contenedor from "./src/contenedor.js";
 
 const contProductos = new Contenedor(db, "productos"); // Nueva instancia de la clase contenedor
