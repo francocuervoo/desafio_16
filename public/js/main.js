@@ -11,6 +11,10 @@ productForm.addEventListener("submit", (e) => {
     title: productForm[0].value,
     price: productForm[1].value,
     thumbnail: productForm[2].value,
+    stock: productForm[3].value,   
+    description: productForm[4].value,      
+    code: productForm[5].value,  
+    time: Date.now()          
   };
 
   socket.emit("update", producto);
@@ -31,7 +35,10 @@ const tableRows = (products) =>
         <tr>
             <td>${p.title}</td>
             <td>$${p.price}</td>
-            <td><img style="width:2rem;" class="img-thumbnail" src=${p.thumbnail}></img></td>                        
+            <td><img style="width:2rem;" class="img-thumbnail" src=${p.thumbnail}></img></td>  
+            <td>$${p.stock}</td>    
+            <td>$${p.description}</td>   
+            <td>$${p.code}</td>                         
         </tr>
       `
     )

@@ -1,5 +1,3 @@
-import knex from "knex";
-
 // Contenedor class
 class Contenedor {
   constructor(db, tabla) {
@@ -32,10 +30,10 @@ class Contenedor {
     }
   }
 
-  async getAll() {
+  async getAll(tableName) {
     //Get all productos
     try {
-      const productos = await this.knex.select("*").from("productos");
+      const productos = await this.knex.select("*").from(tableName);
       return productos;
     } catch (error) {
       console.log(error);
@@ -70,17 +68,14 @@ class Contenedor {
     let newDescription = newProduct.description;
     let newCode = newProduct.code;
     try {
-      await this.knex
-        .from("productos")
-        .where("id", id)
-        .update({
-          title: newTitle,
-          price: newPrice,
-          thumbnail: newThumbnail,
-          stock: newStock,
-          description: newDescription,
-          code: newCode,
-        });
+      await this.knex.from("productos").where("id", id).update({
+        title: newTitle,
+        price: newPrice,
+        thumbnail: newThumbnail,
+        stock: newStock,
+        description: newDescription,
+        code: newCode,
+      });
       return "Producto actualizado";
     } catch (error) {
       console.log("Error al actualizar los productos", error);
@@ -88,11 +83,7 @@ class Contenedor {
   }
 }
 
-class Productos extends Contenedor{
-}
-class Mensajes extends Contenedor{
-  
-}
-
+class Productos extends Contenedor {}
+class Mensajes extends Contenedor {}
 
 export default Contenedor;

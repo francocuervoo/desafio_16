@@ -23,7 +23,7 @@ const contMensajes = new Contenedor(db, "mensajes"); // Nueva instancia de la cl
 // Socket.io
 io.on("connection", async (socket) => {
   // Productos
-  const products = await contProductos.getAll();
+  const products = await contProductos.getAll("productos");
   socket.emit("productos", products);
 
   // Guardar productos
@@ -33,7 +33,7 @@ io.on("connection", async (socket) => {
   });
 
   // Mensajes
-  const messages = await contMensajes.getAll();
+  const messages = await contMensajes.getAll("mensajes");
 
   // Emitir desde el servidor la lista de mensajes
   socket.emit("mensajes", messages);
