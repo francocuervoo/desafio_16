@@ -1,4 +1,4 @@
-import { db } from "../db.js";
+import { dbMaria } from "./dbMaria.js";
 
 const products = [
   {
@@ -38,13 +38,13 @@ const products = [
 
 async function saveProducts() {
   try {
-    const response = await db.insert(products).from("productos");
+    const response = await dbMaria.insert(products).from("productos");
     console.log("Producto insertado");
     return response;
   } catch (error) {
     console.log("Error al insertar productos", error);
   } finally {
-    db.destroy();
+    dbMaria.destroy();
   }
 }
 

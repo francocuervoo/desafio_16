@@ -1,8 +1,8 @@
-import { db } from "../db.js";
+import { dbMaria } from "./dbMaria.js";
 
 async function getAll() { 
   try {
-    const products = await db.select().from("productos");
+    const products = await dbMaria.select().from("productos");
     console.log("Estos son los productos:", products);
     return products;
   } catch (error) {

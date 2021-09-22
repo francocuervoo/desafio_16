@@ -1,10 +1,10 @@
-import { db } from "./db.js";
+import { dbMaria } from "./db.js";
 
 async function createTableProducts(tableName) {
   try {
-    const existTableProducts = await db.schema.hasTable(tableName);
+    const existTableProducts = await dbMaria.schema.hasTable(tableName);
     if (!existTableProducts) {
-      await db.schema.createTable(tableName, (table) => {
+      await dbMaria.schema.createTable(tableName, (table) => {
         table.increments("id").primary().notNullable();
         table.string("title").notNullable();
         table.integer("price").notNullable();
@@ -19,7 +19,7 @@ async function createTableProducts(tableName) {
   } catch (error) {
     console.log(`Error al crear la Tabla ${tableName}`, error);
   } finally {
-    db.destroy();
+    dbMaria.destroy();
   }
 }
 

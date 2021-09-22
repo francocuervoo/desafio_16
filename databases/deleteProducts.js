@@ -1,13 +1,13 @@
-import { db } from "../db.js";
+import { dbMaria } from "./dbMaria.js";
 
 async function deleteById(id) {
   try {
-    await db.from("productos").del().where("id", `${id}`);
+    await dbMaria.from("productos").del().where("id", `${id}`);
     console.log("Producto borrado");
   } catch (error) {
     console.log("Error al borrar el producto", error);
   } finally {
-    db.destroy();
+    dbMaria.destroy();
   }
 }
 
