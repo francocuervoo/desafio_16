@@ -6,56 +6,44 @@
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-    <script src="/socket.io/socket.io.js"></script>
-
     <!-- CSS y Font -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
     <link href="https://fonts.googleapis.com/css2?family=Poppins&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="./styles.css">
     <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
         integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
 
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
+    <script src="index.js"></script>
+
     <title>Desafío Clase 11</title>
 
 </head>
 
 <body>
-
-    <div class="container">
-        <div class="listProducts">
-            <div class="table">
-                <table class="table">
-                    <thead>
-                        <tr>
-                            <th>Nombre:</th>
-                            <th>Precio:</th>
-                            <th>Imagen:</th>
-                        </tr>
-                        <div id="app">
-                            <tr v-for="prod in productos">
-                                <td>{{ prod.title }}</td>
-                                <td>{{ prod.price }}</td>
-                                <td>{{ prod.thumbnail }}</td>
-                            </tr>
-                        </div>
-                    </thead>
-                </table>
+    <table class="table">
+        <thead>
+            <tr>
+                <th>Nombre:</th>
+                <th>Precio:</th>
+                <th>Imagen:</th>
+            </tr>
+            <div id="app">
+                <tr v-for="prod in productos">
+                    <td>{{ prod.title }}</td>
+                    <td>{{ prod.price }}</td>
+                    <td>{{ prod.thumbnail }}</td>
+                </tr>
             </div>
-        </div>
-    </div>
-
-
+        </thead>
+    </table>
 </body>
 
 <script>
-
     let app = new Vue({
-
-        el: '#app',
+        el: "#app",
         data() {
             return {
                 productos: [
@@ -63,21 +51,23 @@
                         id: null,
                         title: null,
                         price: null,
-                        thumbnail: null
-                    }
-                ]
-            }
+                        thumbnail: null,
+                    },
+                ],
+            };
         },
         async mounted() {
-
-            const url = 'http://localhost:8080/api/productos-test';
+            const url = "http://localhost:8080/api/productos-test";
             try {
                 let response = await axios.get(url);
                 this.productos = await response.data;
-
-            } catch (error) { console.log(error) }
-        }
+                console.log(this.productos)
+            } catch (error) {
+                console.log(error);
+            }
+        },
     });
+
 </script>
 
 </html>
