@@ -1,5 +1,7 @@
 // Instance server (socket.io doc version)
 import express from "express";
+import faker from "faker";
+faker.locale = "es";
 const app = express(); // Server app
 import { dbMaria } from "./databases/dbMaria.js";
 import { dbSqlite } from "./databases/dbSqlite.js";
@@ -24,12 +26,21 @@ const contMensajes = new Contenedor(dbSqlite, "mensajes"); // Nueva instancia de
 // Socket.io
 io.on("connection", async (socket) => {
   // Productos
-  const products = await contProductos.getAll("productos");
-  socket.emit("productos", products);
+  const fakerProducts = [];
+  for (let i = 0; i < 5; i++) {
+    const product = {};
+    product.id = i + 1;
+    product.title = faker.commerce.productName();
+    product.price = faker.commerce.price();
+    product.thumbnail = faker.random.image();
+    fakerProducts.push(product);
+  }
+  socket.emit("productos", fakerProducts);
 
   // Guardar productos
   socket.on("update", async (producto) => {
     await contProductos.save(producto);
+    const products = await contProductos.getAll("productos");
     io.emit("productos", products);
   });
 
@@ -43,6 +54,7 @@ io.on("connection", async (socket) => {
   socket.on("nuevoMensaje", async (msg) => {
     msg.fyh = new Date().toLocaleString();
     await contMensajes.save(msg); // Save también sirve para guardar mensajes, no necesariamente solo productos
+    const messages = await contMensajes.getAll("mensajes");
     io.emit("mensajes", messages);
   });
 });
@@ -68,5 +80,9 @@ app.engine(
 );
 app.get("/hbs", (req, res) => {
   // Renderiza el archivo bodyForm.hbs dentro del layout llamado 'layoutFrame'
+  res.render("bodyProducts"), { layout: "layoutFrame" };
+});
+
+app.get("/api/productos-test", (req, res) => {
   res.render("bodyProducts"), { layout: "layoutFrame" };
 });
