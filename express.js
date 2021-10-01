@@ -2,6 +2,9 @@
 import express from "express";
 import faker from "faker";
 faker.locale = "es";
+
+import cors from "cors";
+
 //import handlebars from "express-handlebars";
 
 const app = express();
@@ -33,7 +36,8 @@ app.use(express.urlencoded({ extended: true })); // Middleware
 );*/
 
 //app.set("view engine", "hbs");
-app.use(express.static("public"));
+//app.use(express.static("public"));
+app.use(cors());
 
 app.get("/api/productos-test", async (req, res) => {
   const shuffled = fakerProducts.sort(() => 0.5 - Math.random())

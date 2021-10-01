@@ -16,8 +16,6 @@
     <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
-    <script src="index.js"></script>
-
     <title>Desafío Clase 11</title>
 
 </head>
@@ -34,9 +32,19 @@
                 <tr v-for="prod in productos">
                     <td>{{ prod.title }}</td>
                     <td>{{ prod.price }}</td>
-                    <td>{{ prod.thumbnail }}</td>
+                    <td><img style="width: 5rem;" src="{{ prod.thumbnail }}"></td>
                 </tr>
             </div>
+            <div id="app">
+                <ol>
+                    <li v-for="prod in productos">
+                        {{ prod }}
+                    </li>
+                </ol>
+            </div>
+            <div id="app">
+                {{ productos }}
+            </div>            
         </thead>
     </table>
 </body>
@@ -61,7 +69,6 @@
             try {
                 let response = await axios.get(url);
                 this.productos = await response.data;
-                console.log(this.productos)
             } catch (error) {
                 console.log(error);
             }
