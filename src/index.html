@@ -21,60 +21,50 @@
 </head>
 
 <body>
-    <table class="table">
+    <table id="app" class="table">
         <thead>
             <tr>
                 <th>Nombre:</th>
                 <th>Precio:</th>
                 <th>Imagen:</th>
             </tr>
-            <div id="app">
-                <tr v-for="prod in productos">
-                    <td>{{ prod.title }}</td>
-                    <td>{{ prod.price }}</td>
-                    <td><img style="width: 5rem;" src="{{ prod.thumbnail }}"></td>
-                </tr>
-            </div>
-            <div id="app">
-                <ol>
-                    <li v-for="prod in productos">
-                        {{ prod }}
-                    </li>
-                </ol>
-            </div>
-            <div id="app">
-                {{ productos }}
-            </div>            
+            <tr v-for="prod in productos">
+                <td>{{ prod.title }}</td>
+                <td>{{ prod.price }} </td>
+                <td><img style="width: 5rem;" :src=prod.thumbnail> </td>
+            </tr>
         </thead>
     </table>
+
+    <script>
+        let app = new Vue({
+            el: "#app",
+            data() {
+                return {
+                    productos: [
+                        {
+                            id: null,
+                            title: null,
+                            price: null,
+                            thumbnail: null,
+                        },
+                    ],
+                };
+            },
+            async mounted() {
+                const url = "http://localhost:8080/api/productos-test";
+                try {
+                    let response = await axios.get(url);
+                    this.productos = await response.data;
+                    console.log(productos)
+                } catch (error) {
+                    console.log(error);
+                }
+            },
+        });
+
+    </script>
+
 </body>
-
-<script>
-    let app = new Vue({
-        el: "#app",
-        data() {
-            return {
-                productos: [
-                    {
-                        id: null,
-                        title: null,
-                        price: null,
-                        thumbnail: null,
-                    },
-                ],
-            };
-        },
-        async mounted() {
-            const url = "http://localhost:8080/api/productos-test";
-            try {
-                let response = await axios.get(url);
-                this.productos = await response.data;
-            } catch (error) {
-                console.log(error);
-            }
-        },
-    });
-
-</script>
 
 </html>
