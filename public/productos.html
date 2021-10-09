@@ -24,7 +24,10 @@
 
     <table id="app" class="table">
 
-        <h1>Bienvenido {{ userName.name }}</h1>
+        <form>
+            <h1>Bienvenido {{ userName.name }}</h1>
+            <button>Desloguearse</button>
+        </form>
 
         <thead>
             <tr>
@@ -45,11 +48,11 @@
             el: "#app",
             data() {
                 return {
-                    userName: [
-                        {
-                           name: null,
-                        }
-                    ],
+                    userName:
+                    {
+                        name: null,
+                    }
+                    ,
                     productos: [
                         {
                             id: null,
@@ -62,12 +65,13 @@
             },
             async mounted() {
                 const url = "http://localhost:8080/api/productos-test";
-                const urlUser = "http://localhost:8080/api/user"; 
+                const urlUser = "http://localhost:8080/api/user";
                 try {
                     let response = await axios.get(url);
-                    let responseGetUser = await axios.get(urlUser);                    
+                    let responseGetUser = await axios.get(urlUser);
+                    console.log("ResponseGetUser", responseGetUser)
                     this.productos = await response.data;
-                    this.usuario = await responseGetUser.data;
+                    this.userName = await responseGetUser.data;
                 } catch (error) {
                     console.log(error);
                 }

@@ -40,7 +40,7 @@ app.get("/login", (req, res) => {
   });
 });
 
-app.post("/login", async (req, res) => {
+app.post("/login", (req, res) => {
   console.log("ACA", req.body)
   req.session.name = req.body.name;
   res.redirect("/products");
