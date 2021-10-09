@@ -30,7 +30,7 @@ app.get("/api/productos-test", async (req, res) => {
 
 app.get("/api/user", (req, res) => {
   res.send({
-    nombre: req.session.nombre,
+    name: req.session.name,
   });
 });
 
@@ -41,7 +41,8 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", async (req, res) => {
-  req.session.nombre = req.body.nombre;
+  console.log("ACA", req.body)
+  req.session.name = req.body.name;
   res.redirect("/products");
 });
 

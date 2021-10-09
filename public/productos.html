@@ -24,7 +24,7 @@
 
     <table id="app" class="table">
 
-        <h1>Bienvenido {{ username.name }}</h1>
+        <h1>Bienvenido {{ userName.name }}</h1>
 
         <thead>
             <tr>
@@ -68,7 +68,6 @@
                     let responseGetUser = await axios.get(urlUser);                    
                     this.productos = await response.data;
                     this.usuario = await responseGetUser.data;
-                    this.usuario
                 } catch (error) {
                     console.log(error);
                 }
