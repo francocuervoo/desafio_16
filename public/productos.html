@@ -25,7 +25,7 @@
     <table id="app" class="table">
 
         <form>
-            <h1>Bienvenido {{ userName.name }}</h1>
+            <h1>Bienvenido {{ user.userName }}</h1>
             <button>Desloguearse</button>
         </form>
 
@@ -43,14 +43,21 @@
         </thead>
     </table>
 
+    <button onclick="reloadPage()">Recargar página</button>
+
     <script>
+
+        function reloadPage() {
+            window.location.reload()
+        };
+
         let app = new Vue({
             el: "#app",
             data() {
                 return {
-                    userName:
+                    user:
                     {
-                        name: null,
+                        userName: null,
                     }
                     ,
                     productos: [
@@ -71,7 +78,7 @@
                     let responseGetUser = await axios.get(urlUser);
                     console.log("ResponseGetUser", responseGetUser)
                     this.productos = await response.data;
-                    this.userName = await responseGetUser.data;
+                    this.user = await responseGetUser.data.data;
                 } catch (error) {
                     console.log(error);
                 }

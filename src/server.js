@@ -1,15 +1,43 @@
 import express from "express";
-import faker from "faker"; faker.locale = "es";
+import faker from "faker";
+faker.locale = "es";
 import cors from "cors";
 import { auth } from "./middlewares/auth.middleware.js";
+import session from "express-session";
+import MongoSession from "connect-mongodb-session";
+//import cookieParser from "cookie-parser";
 
+import dotenv from "dotenv";
+dotenv.config();
+
+const { MONGODB_URI, PORT, SECRET } = process.env;
+const MongoStore = MongoSession(session);
+
+const store = new MongoStore({
+  uri: MONGODB_URI,
+  collection: "sessions",
+});
 
 const app = express();
-const PORT = 8080;
 app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set(express.static("public"));
+//app.use(cookieParser())
+
+app.use(
+  session({
+    store,
+    resave: true,
+    saveUninitialized: true,
+    secret: SECRET,
+    cookie: {
+      maxAge: 10 * 1000,
+      sameSite: "lax",
+    },
+    rolling: true,
+  })
+);
 
 // Genero Productos
 const fakerProducts = [];
@@ -28,9 +56,13 @@ app.get("/api/productos-test", async (req, res) => {
   res.status(200).send(selected);
 });
 
+// app.get("/cookieIlimitada", (req, res) => {
+//   res.cookie("ilimitada", "data").send("Cookie ilimitada");
+// });
+
 app.get("/api/user", (req, res) => {
   res.send({
-    name: req.session.name,
+    userName: req.session.userName,
   });
 });
 
@@ -41,9 +73,19 @@ app.get("/login", (req, res) => {
 });
 
 app.post("/login", (req, res) => {
-  console.log("ACA", req.body)
-  req.session.name = req.body.name;
+  console.log("ACA", req.body);
+  req.session.userName = req.body.user;
   res.redirect("/products");
+});
+
+app.get("/logout", (req, res) => {
+  req.session.destroy((error) => {
+    if (!error) {
+      res.redirect("/login");
+    } else {
+      res.send({ error });
+    }
+  });
 });
 
 app.get("/products", auth, (req, res) => {
