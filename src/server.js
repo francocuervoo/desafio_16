@@ -1,8 +1,9 @@
 import express from "express";
-import faker from "faker";
-faker.locale = "es";
+import faker from "faker"; faker.locale = "es";
 import cors from "cors";
-import { auth } from "./middlewares/auth.middleware.js";
+import { authMiddleware , loginMiddleware } from "./middlewares/auth.middlewares.js";
+import { loginView } from "./controllers/views.controllers.js";
+
 import session from "express-session";
 import MongoSession from "connect-mongodb-session";
 //import cookieParser from "cookie-parser";
@@ -24,6 +25,22 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set(express.static("public"));
 //app.use(cookieParser())
+
+// Midllewares de Express
+app
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .use(express.static('public')) 
+;
+
+// Routers
+import apiRouter from './routers/apis/api.router.js';
+import viewsRouter from './routers/views/views.router.js';
+
+app
+  .use('/api', apiRouter)
+  .use('/', viewsRouter)
+;
 
 app.use(
   session({
@@ -56,9 +73,9 @@ app.get("/api/productos-test", async (req, res) => {
   res.status(200).send(selected);
 });
 
-// app.get("/cookieIlimitada", (req, res) => {
+//app.get("/cookieIlimitada", (req, res) => {
 //   res.cookie("ilimitada", "data").send("Cookie ilimitada");
-// });
+//});
 
 app.get("/api/user", (req, res) => {
   res.send({
@@ -66,33 +83,33 @@ app.get("/api/user", (req, res) => {
   });
 });
 
-app.get("/login", (req, res) => {
-  res.sendFile("login.html", {
-    root: "./public",
-  });
-});
+// app.get("/login", (req, res) => {
+//   res.sendFile("login.html", {
+//     root: "./public",
+//   });
+// });
 
-app.post("/login", (req, res) => {
-  console.log("ACA", req.body);
-  req.session.userName = req.body.user;
-  res.redirect("/products");
-});
+// app.post("/login", (req, res) => {
+//   console.log("ACA", req.body);
+//   req.session.userName = req.body.user;
+//   res.redirect("/products");
+// });
 
-app.get("/logout", (req, res) => {
-  req.session.destroy((error) => {
-    if (!error) {
-      res.redirect("/login");
-    } else {
-      res.send({ error });
-    }
-  });
-});
+// app.get("/logout", (req, res) => {
+//   req.session.destroy((error) => {
+//     if (!error) {
+//       res.redirect("/login");
+//     } else {
+//       res.send({ error });
+//     }
+//   });
+// });
 
-app.get("/products", auth, (req, res) => {
-  res.sendFile("productos.html", {
-    root: "./public",
-  });
-});
+// app.get("/products", auth, (req, res) => {
+//   res.sendFile("productos.html", {
+//     root: "./public",
+//   });
+// });
 
 const server = app.listen(PORT, () => {
   console.log(
