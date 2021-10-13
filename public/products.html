@@ -22,28 +22,28 @@
 
 <body>
 
-    <table id="app" class="table">
+    <div id="app" class="table">
 
-        <form>
-            <h1>Bienvenido {{ userName }}</h1>
-            <button>Desloguearse</button>
-        </form>
+        <h1>Bienvenido {{ nombre }}</h1>
+        <button onclick="logout()">Desloguearse</button>
 
-        <thead>
-            <tr>
-                <th>Nombre:</th>
-                <th>Precio:</th>
-                <th>Imagen:</th>
-            </tr>
-            <tr v-for="prod in productos">
-                <td>{{ prod.title }}</td>
-                <td>{{ prod.price }} </td>
-                <td><img style="width: 5rem;" :src=prod.thumbnail> </td>
-            </tr>
-        </thead>
-    </table>
+        <table>
+            <thead>
+                <tr>
+                    <th>Nombre:</th>
+                    <th>Precio:</th>
+                    <th>Imagen:</th>
+                </tr>
+                <tr v-for="prod in productos">
+                    <td>{{ prod.title }}</td>
+                    <td>{{ prod.price }} </td>
+                    <td><img style="width: 5rem;" :src=prod.thumbnail> </td>
+                </tr>
+            </thead>
+        </table>
 
-    <button onclick="reloadPage()">Recargar página</button>
+        <button onclick="reloadPage()">Recargar página</button>
+    </div>
 
     <script>
 
@@ -55,7 +55,7 @@
             el: "#app",
             data() {
                 return {
-                    userName: null
+                    nombre: null
                     ,
                     productos: [
                         {
@@ -67,6 +67,11 @@
                     ],
                 };
             },
+            methods: {
+                logout: function () {
+                    window.location = '/logout'
+                }
+            },
             async mounted() {
                 const urlProducts = "http://localhost:8080/api/productos-test";
                 const urlUser = "http://localhost:8080/api/user";
@@ -74,7 +79,7 @@
                     let responseProducts = await axios.get(urlProducts);
                     let responseGetUser = await axios.get(urlUser);
                     this.productos = await responseProducts.data;
-                    this.userName = await responseGetUser.data.userName;
+                    this.nombre = await responseGetUser.data.nombre;
                 } catch (error) {
                     console.log(error);
                 }

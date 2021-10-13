@@ -1,7 +1,10 @@
-import express from "express";
+import express from "express"; const app = express();
 import faker from "faker"; faker.locale = "es";
 import cors from "cors";
-import { authMiddleware , loginMiddleware } from "./middlewares/auth.middlewares.js";
+import {
+  authMiddleware,
+  loginMiddleware,
+} from "./middlewares/auth.middlewares.js";
 import { loginView } from "./controllers/views.controllers.js";
 
 import session from "express-session";
@@ -19,29 +22,6 @@ const store = new MongoStore({
   collection: "sessions",
 });
 
-const app = express();
-app.use(cors());
-app.use(express.json());
-app.use(express.urlencoded({ extended: true }));
-app.set(express.static("public"));
-//app.use(cookieParser())
-
-// Midllewares de Express
-app
-  .use(express.json())
-  .use(express.urlencoded({ extended: true }))
-  .use(express.static('public')) 
-;
-
-// Routers
-import apiRouter from './routers/apis/api.router.js';
-import viewsRouter from './routers/views/views.router.js';
-
-app
-  .use('/api', apiRouter)
-  .use('/', viewsRouter)
-;
-
 app.use(
   session({
     store,
@@ -55,6 +35,24 @@ app.use(
     rolling: true,
   })
 );
+
+app.use(cors());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.set(express.static("public"));
+//app.use(cookieParser())
+
+// Midllewares de Express
+app
+  .use(express.json())
+  .use(express.urlencoded({ extended: true }))
+  .use(express.static("public"));
+
+
+// Routers
+import apiRouter from "./routers/apis/api.router.js";
+import viewsRouter from "./routers/views/views.router.js";
+app.use("/api", apiRouter).use("/", viewsRouter);
 
 // Genero Productos
 const fakerProducts = [];
@@ -79,7 +77,7 @@ app.get("/api/productos-test", async (req, res) => {
 
 app.get("/api/user", (req, res) => {
   res.send({
-    userName: req.session.userName,
+    nombre: req.session.nombre,
   });
 });
 
@@ -95,15 +93,17 @@ app.get("/api/user", (req, res) => {
 //   res.redirect("/products");
 // });
 
-// app.get("/logout", (req, res) => {
-//   req.session.destroy((error) => {
-//     if (!error) {
-//       res.redirect("/login");
-//     } else {
-//       res.send({ error });
-//     }
-//   });
-// });
+app.get("/logout", (req, res) => {
+   req.session.destroy((error) => {
+     if (!error) {
+         res.sendFile("logout.html", {
+       root: "./public",
+     });
+     } else {
+       res.send({ error });
+     }
+   });
+});
 
 // app.get("/products", auth, (req, res) => {
 //   res.sendFile("productos.html", {
