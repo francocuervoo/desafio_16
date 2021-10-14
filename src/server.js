@@ -1,15 +1,9 @@
 import express from "express"; const app = express();
 import faker from "faker"; faker.locale = "es";
 import cors from "cors";
-import {
-  authMiddleware,
-  loginMiddleware,
-} from "./middlewares/auth.middlewares.js";
-import { loginView } from "./controllers/views.controllers.js";
-
+//import { cacheControl } from "./middlewares/auth.middlewares.js";
 import session from "express-session";
 import MongoSession from "connect-mongodb-session";
-//import cookieParser from "cookie-parser";
 
 import dotenv from "dotenv";
 dotenv.config();
@@ -40,14 +34,12 @@ app.use(cors());
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.set(express.static("public"));
-//app.use(cookieParser())
 
 // Midllewares de Express
 app
   .use(express.json())
   .use(express.urlencoded({ extended: true }))
   .use(express.static("public"));
-
 
 // Routers
 import apiRouter from "./routers/apis/api.router.js";
@@ -71,45 +63,23 @@ app.get("/api/productos-test", async (req, res) => {
   res.status(200).send(selected);
 });
 
-//app.get("/cookieIlimitada", (req, res) => {
-//   res.cookie("ilimitada", "data").send("Cookie ilimitada");
-//});
-
 app.get("/api/user", (req, res) => {
   res.send({
     nombre: req.session.nombre,
   });
 });
 
-// app.get("/login", (req, res) => {
-//   res.sendFile("login.html", {
-//     root: "./public",
-//   });
-// });
-
-// app.post("/login", (req, res) => {
-//   console.log("ACA", req.body);
-//   req.session.userName = req.body.user;
-//   res.redirect("/products");
-// });
-
 app.get("/logout", (req, res) => {
-   req.session.destroy((error) => {
-     if (!error) {
-         res.sendFile("logout.html", {
-       root: "./public",
-     });
-     } else {
-       res.send({ error });
-     }
-   });
+  req.session.destroy((error) => {
+    if (!error) {
+      res.sendFile("logout.html", {
+        root: "./public",
+      });
+    } else {
+      res.send({ error });
+    }
+  });
 });
-
-// app.get("/products", auth, (req, res) => {
-//   res.sendFile("productos.html", {
-//     root: "./public",
-//   });
-// });
 
 const server = app.listen(PORT, () => {
   console.log(

@@ -1,4 +1,4 @@
-import { authMiddleware, loginMiddleware } from '../../middlewares/auth.middlewares.js'
+import { authMiddleware, loginMiddleware , logoutMiddleware, cacheControl } from '../../middlewares/auth.middlewares.js'
 
 import { productsView, loginView, logoutView } from '../../controllers/views.controllers.js';
 
@@ -9,8 +9,8 @@ const viewsRouter = Router();
 viewsRouter
   .get('/login', loginView)
   .post('/login', loginMiddleware)
-  .get('/logout', logoutView)
-  .get('/products', authMiddleware, productsView) 
+  .get('/products', cacheControl, authMiddleware, productsView)
+  .get("/logout", logoutMiddleware, logoutView) 
 ;
 
 export default viewsRouter
