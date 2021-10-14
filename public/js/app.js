@@ -6,6 +6,8 @@ const enviar = e => {
 
   const usuario = document.getElementById('nombre').value;
 
+  sessionStorage.setItem("userName", usuario)
+
   axios.post('/login', {
     nombre: usuario
   })
