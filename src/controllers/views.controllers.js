@@ -13,3 +13,7 @@ export const loginView = (req, res) => {
 export const logoutView = (req, res) => {
   res.sendFile("logout.html", { root: "./public" });
 };
+
+export const failedLogin = (req, res) => {
+  res.sendFile("login-error.html", { root: "./public" });
+};

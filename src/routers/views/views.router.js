@@ -1,18 +1,27 @@
-import { authMiddleware, loginMiddleware , logoutMiddleware, cacheControl } from '../../middlewares/auth.middlewares.js'
+import { authMiddleware, logoutMiddleware, cacheControl } from '../../middlewares/auth.middlewares.js'
 
-import { productsView, loginView, logoutView } from '../../controllers/views.controllers.js';
+import { productsView, loginView, logoutView, failedLogin } from '../../controllers/views.controllers.js';
 
 import { Router } from 'express';
+
+import passport from "../../utils/passport.util.js";
 
 const viewsRouter = Router();
 
 viewsRouter
   .get('/login', loginView)
-  .post('/login', loginMiddleware)
   .get('/products', cacheControl, authMiddleware, productsView)
-  .get("/logout", logoutMiddleware, logoutView) 
-;
-
+  .get('/logout', logoutMiddleware, logoutView)
+  .get("/auth/facebook", passport.authenticate("facebook"))
+  .get("/failedLogin", failedLogin)
+  .get(
+    "/auth/facebook/callback",
+    passport.authenticate("facebook", {
+      successRedirect: "/",
+      failureRedirect: "/failLogin",
+    })
+  );
+  
 export default viewsRouter
 
 

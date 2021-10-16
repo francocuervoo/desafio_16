@@ -1,14 +1,16 @@
 import express from "express"; const app = express();
 import faker from "faker"; faker.locale = "es";
 import cors from "cors";
-//import { cacheControl } from "./middlewares/auth.middlewares.js";
 import session from "express-session";
 import MongoSession from "connect-mongodb-session";
-
 import dotenv from "dotenv";
+import apiRouter from "./routers/apis/api.router.js";
+import viewsRouter from "./routers/views/views.router.js";
+import passport from "./utils/passport.util.js";
 dotenv.config();
 
-const { MONGODB_URI, PORT, SECRET } = process.env;
+
+const { MONGODB_URI, PORT, SECRET, NODE_ENV } = process.env;
 const MongoStore = MongoSession(session);
 
 const store = new MongoStore({
@@ -24,7 +26,7 @@ app.use(
     secret: SECRET,
     cookie: {
       maxAge: 10 * 1000,
-      sameSite: "lax",
+      sameSite: NODE_ENV == "development" ? "lax" : "strict",
     },
     rolling: true,
   })
@@ -36,14 +38,15 @@ app.use(express.urlencoded({ extended: true }));
 app.set(express.static("public"));
 
 // Midllewares de Express
-app
-  .use(express.json())
-  .use(express.urlencoded({ extended: true }))
-  .use(express.static("public"));
+app.use(express.json())
+app.use(express.urlencoded({ extended: true }))
+app.use(express.static("public"));
+
+// Passport
+app.use(passport.initialize());
+app.use(passport.session());
 
 // Routers
-import apiRouter from "./routers/apis/api.router.js";
-import viewsRouter from "./routers/views/views.router.js";
 app.use("/api", apiRouter).use("/", viewsRouter);
 
 // Genero Productos
