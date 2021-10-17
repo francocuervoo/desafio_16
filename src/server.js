@@ -1,5 +1,7 @@
-import express from "express"; const app = express();
-import faker from "faker"; faker.locale = "es";
+import express from "express";
+const app = express();
+import faker from "faker";
+faker.locale = "es";
 import cors from "cors";
 import session from "express-session";
 import MongoSession from "connect-mongodb-session";
@@ -8,7 +10,6 @@ import apiRouter from "./routers/apis/api.router.js";
 import viewsRouter from "./routers/views/views.router.js";
 import passport from "./utils/passport.util.js";
 dotenv.config();
-
 
 const { MONGODB_URI, PORT, SECRET, NODE_ENV } = process.env;
 const MongoStore = MongoSession(session);
@@ -38,8 +39,8 @@ app.use(express.urlencoded({ extended: true }));
 app.set(express.static("public"));
 
 // Midllewares de Express
-app.use(express.json())
-app.use(express.urlencoded({ extended: true }))
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
 app.use(express.static("public"));
 
 // Passport
@@ -66,10 +67,31 @@ app.get("/api/productos-test", async (req, res) => {
   res.status(200).send(selected);
 });
 
-app.get("/api/user", (req, res) => {
-  res.send({
-    nombre: req.session.nombre,
-  });
+//app.get("/api/user", (req, res) => {
+//  res.send({
+//    nombre: req.session.nombre,
+//  });
+//});
+
+app.get("/", (req, res) => {
+  if (req.isAuthenticated()) {
+    res.redirect("/datos");
+  } else {
+    res.redirect("/login");
+  }
+});
+
+app.get("/datos", (req, res) => {
+  if (req.isAuthenticated()) {
+    if (!req.user.contador) req.user.contador = 0;
+    req.user.contador++;
+    res.sendFile("datos.html", {
+      root: "./public",
+      //nombre: req.user.displayName,
+      //foto: req.user.photos[0].value,
+      //contador: req.user.contador,
+    });
+  }
 });
 
 app.get("/logout", (req, res) => {
