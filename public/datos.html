@@ -5,33 +5,95 @@
   <title>Login</title>
   <meta charset="utf-8">
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <link rel="icon" href="favicon.ico" type="image/x-icon" />
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
     integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
   <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-  <link rel="stylesheet" href="css/estilos.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+  <title>Datos - Desafío Clase 13</title>
 
 </head>
 
 <body>
-    
-    <div class="container text-center my-3">
-        <div class="jumbotron" style="background-color: rgb(191, 226, 191);color: darkgreen;">
-            <h1>USER OK LOGIN!</h1>
-            <br>
-            <h2><i>Bienvenido {{nombre}}</i></h2>
-            <br>
-            <img src="" width="100" alt=""><br>
-            <img src="{{foto}}" width="100" alt=""><br>
-            <a href="#">{{email}}</a>
-            <br>
-            <br>
-            <h4>Visitas: {{contador}}</h4>
-            <a class="btn btn-danger mt-3" href="/logout"><span class="fa fa-sign-out"></span><span> Logout</span></a>
-        </div>
+
+  <div id="app" class="container text-center my-3">
+    <div class="jumbotron" style="background-color: rgb(191, 226, 191);color: darkgreen;">
+      <h1>USER OK LOGIN!</h1>
+      <br>
+      <h2><i>Bienvenido {{user.nombreDePila}}</i></h2>
+      <h2><i>Bienvenido {{user}}</i></h2>      
+      <br>
+      <img :src="user.photo" width="100" alt=""><br>
+      <a href="#">{{user.email}}</a>
+      <br>
+      <br>
+      <a class="btn btn-danger mt-3" href="/logout"><span class="fa fa-sign-out"></span><span> Logout</span></a>
     </div>
+
+    <table>
+      <thead>
+        <tr>
+          <th>Nombre:</th>
+          <th>Precio:</th>
+          <th>Imagen:</th>
+        </tr>
+        <tr v-for="prod in productos">
+          <td>{{ prod.title }}</td>
+          <td>{{ prod.price }} </td>
+          <td><img style="width: 5rem;" :src=prod.thumbnail> </td>
+        </tr>
+      </thead>
+    </table>
+
+
+    <!--<button v-on:click="logout()">Desloguearse</button>-->
+  </div>
+
+  <script>
+
+    function reloadPage() {
+      window.location.reload()
+    };
+
+    let app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          user: null
+          ,
+          productos: [
+            {
+              id: null,
+              title: null,
+              price: null,
+              thumbnail: null,
+            },
+          ],
+        };
+      },
+      methods: {
+        logout: function () {
+          window.location = '/logout'
+        }
+      },
+      async mounted() {
+        const urlProducts = "http://localhost:8080/api/productos-test";
+        const urlSessionFacebook = "http://localhost:8080/api/user";
+        try {
+          let responseProducts = await axios.get(urlProducts);
+          let responseGetUser = await axios.get(urlSessionFacebook);
+          this.productos = await responseProducts.data;
+          this.user = await responseGetUser.data;
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
+
+  </script>
 
 </body>
 
 </html>
-

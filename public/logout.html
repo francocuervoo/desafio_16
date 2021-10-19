@@ -12,7 +12,7 @@
     integrity="sha384-B0vP5xmATw1+K9KRQjQERJvTumQW0nPEzvF6L/Z6nronJ3oUOFUFpCjEUQouq2+l" crossorigin="anonymous">
 
   <!-- AXIOS     -->
-  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>  
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
   <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
 
 </head>
@@ -21,16 +21,17 @@
 
   <div id="app" class="table">
 
-    <h1>Hasta luego {{ nombre }}</h1>
+    <h1>Hasta luego {{ user }}</h1>
 
   </div>
 
-<script>
+  <!--<script>
 
     let app = new Vue({
       el: "#app",
       data() {
         return {
+          // adaptar al formato facebook, ver con el console.log del req.user en app.get("/")
           nombre: null,
 
         };
@@ -40,7 +41,35 @@
       },
     });
 
+  </script>-->
+
+
+  <script>
+    let app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          nombre: null
+          ,
+        };
+      },
+      methods: {
+        async mounted() {
+          const urlSessionFacebook = "http://localhost:8080/api/user";
+          try {
+            let responseGetUser = await axios.get(urlSessionFacebook);
+            this.user = await responseGetUser.data;
+          } catch (error) {
+            console.log(error);
+          }
+        },
+      }
+    });
+
   </script>
+
+
+
 
 </body>
 

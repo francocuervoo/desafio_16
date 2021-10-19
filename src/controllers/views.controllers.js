@@ -3,7 +3,7 @@ export const productsView = (req, res) => {
 };
 
 export const loginView = (req, res) => {
-  if (req.session.nombre) {
+  if (req.user) {
     res.redirect("/products");
   } else {
     res.sendFile("login.html", { root: "./public" });

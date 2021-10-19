@@ -67,13 +67,21 @@ app.get("/api/productos-test", async (req, res) => {
   res.status(200).send(selected);
 });
 
-//app.get("/api/user", (req, res) => {
-//  res.send({
-//    nombre: req.session.nombre,
-//  });
-//});
+app.get("/api/user", (req, res) => {
+  const nombreCompleto = req.user.displayName;
+  const arrayDeNombres = nombreCompleto.split("");
+  const nombreDePila = arrayDeNombres[0];
+  res.send({
+    usuario: {
+      nombre: nombreDePila,
+      photo: req.user.photos[0].value,
+      email: req.user.emails[0].value,
+    },
+  });
+});
 
 app.get("/", (req, res) => {
+  //console.log(req.user);
   if (req.isAuthenticated()) {
     res.redirect("/datos");
   } else {
@@ -83,8 +91,8 @@ app.get("/", (req, res) => {
 
 app.get("/datos", (req, res) => {
   if (req.isAuthenticated()) {
-    if (!req.user.contador) req.user.contador = 0;
-    req.user.contador++;
+    //if (!req.user.contador) req.user.contador = 0;
+    //req.user.contador++;
     res.sendFile("datos.html", {
       root: "./public",
       //nombre: req.user.displayName,

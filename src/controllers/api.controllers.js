@@ -7,8 +7,7 @@ export const productsController = (req, res) => {
 };
 
 export const userController = (req, res) => {
-  console.log(req.user);
-  //res.send({
-  // nombre: req.session.nombre
-  //})
+  res.send({
+    nombre: req.user,
+  });
 };
