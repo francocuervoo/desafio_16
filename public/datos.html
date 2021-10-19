@@ -81,8 +81,8 @@
         }
       },
       async mounted() {
-        const urlProducts = "http://localhost:8080/api/products";
-        const urlSessionFacebook = "http://localhost:8080/api/user";
+        const urlProducts = "/api/products";
+        const urlSessionFacebook = "/api/user";
         try {
           let responseProducts = await axios.get(urlProducts);
           let responseGetUser = await axios.get(urlSessionFacebook);

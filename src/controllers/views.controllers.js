@@ -1,5 +1,5 @@
 export const productsView = (req, res) => {
-  res.sendFile("products.html", { root: "./public" });
+  res.sendFile("datos.html", { root: "./public" });
 };
 
 export const loginView = (req, res) => {

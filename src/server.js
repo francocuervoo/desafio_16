@@ -50,42 +50,12 @@ app.use(passport.session());
 // Routers
 app.use("/api", apiRouter).use("/", viewsRouter);
 
-// Genero Productos
-const fakerProducts = [];
-for (let i = 0; i < 100; i++) {
-  const product = {};
-  product.id = i + 1;
-  product.title = faker.commerce.productName();
-  product.price = faker.commerce.price();
-  product.thumbnail = faker.random.image();
-  fakerProducts.push(product);
-}
-
-/*app.get("/api/productos-test", async (req, res) => {
-  const shuffled = fakerProducts.sort(() => 0.5 - Math.random());
-  let selected = shuffled.splice(0, 5);
-  res.status(200).send(selected);
-});*/
-
 app.get("/", (req, res) => {
   //console.log(req.user);
   if (req.isAuthenticated()) {
-    res.redirect("/datos");
+    res.redirect("/products");
   } else {
     res.redirect("/login");
-  }
-});
-
-app.get("/datos", (req, res) => {
-  if (req.isAuthenticated()) {
-    //if (!req.user.contador) req.user.contador = 0;
-    //req.user.contador++;
-    res.sendFile("datos.html", {
-      root: "./public",
-      //nombre: req.user.displayName,
-      //foto: req.user.photos[0].value,
-      //contador: req.user.contador,
-    });
   }
 });
 
