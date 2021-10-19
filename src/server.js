@@ -61,24 +61,11 @@ for (let i = 0; i < 100; i++) {
   fakerProducts.push(product);
 }
 
-app.get("/api/productos-test", async (req, res) => {
+/*app.get("/api/productos-test", async (req, res) => {
   const shuffled = fakerProducts.sort(() => 0.5 - Math.random());
   let selected = shuffled.splice(0, 5);
   res.status(200).send(selected);
-});
-
-app.get("/api/user", (req, res) => {
-  const nombreCompleto = req.user.displayName;
-  const arrayDeNombres = nombreCompleto.split("");
-  const nombreDePila = arrayDeNombres[0];
-  res.send({
-    usuario: {
-      nombre: nombreDePila,
-      photo: req.user.photos[0].value,
-      email: req.user.emails[0].value,
-    },
-  });
-});
+});*/
 
 app.get("/", (req, res) => {
   //console.log(req.user);

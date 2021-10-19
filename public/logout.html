@@ -21,11 +21,11 @@
 
   <div id="app" class="table">
 
-    <h1>Hasta luego {{ user }}</h1>
+    <h1>Hasta luego {{ nombre }}</h1>
 
   </div>
 
-  <!--<script>
+  <script>
 
     let app = new Vue({
       el: "#app",
@@ -41,16 +41,17 @@
       },
     });
 
-  </script>-->
+  </script>
 
 
-  <script>
+  <!--<script>
     let app = new Vue({
       el: "#app",
       data() {
         return {
-          nombre: null
-          ,
+          user: {
+            nombre: null,
+          },
         };
       },
       methods: {
@@ -66,7 +67,7 @@
       }
     });
 
-  </script>
+  </script>-->
 
 
 
