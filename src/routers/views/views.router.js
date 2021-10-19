@@ -1,4 +1,4 @@
-import { authMiddleware, logoutMiddleware, datosMiddleware, cacheControl } from '../../middlewares/auth.middlewares.js'
+import { authMiddleware, logoutMiddleware, cacheControl } from '../../middlewares/auth.middlewares.js'
 
 import { productsView, loginView, logoutView, failedLogin } from '../../controllers/views.controllers.js';
 
@@ -10,7 +10,7 @@ const viewsRouter = Router();
 
 viewsRouter
   .get('/login', loginView)
-  .get('/products', datosMiddleware, cacheControl, authMiddleware, productsView)
+  .get('/products', cacheControl, authMiddleware, productsView)
   .get('/logout', logoutMiddleware, logoutView)
   .get("/auth/facebook", passport.authenticate("facebook"))
   .get("/failedLogin", failedLogin)

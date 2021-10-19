@@ -6,14 +6,6 @@ export const authMiddleware = (req, res, next) => {
   }
 };
 
-export const datosMiddleware = (req, res, next) => {
-  if (req.isAuthenticated()) {
-    next();
-  } else {
-    res.redirect("/login");
-  }
-};
-
 export const logoutMiddleware = (req, res, next) => {
   req.logout();
   next();
