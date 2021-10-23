@@ -1,0 +1,88 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <title>Login</title>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+
+  <script src="https://cdn.jsdelivr.net/npm/vue@2/dist/vue.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/axios/0.19.2/axios.min.js"></script>
+
+  <title>Process Info - Desafío Clase 14</title>
+
+</head>
+
+<body>
+
+  <div id="app" class="container text-center my-3">
+    <div class="jumbotron" style="background-color: rgb(191, 226, 191);color: darkgreen;">
+      <h1>PROCESS</h1>
+    </div>
+
+    <table class="table">
+      <thead>
+        <tr>
+          <th>Command Line:</th>
+          <th>Sistema Operativo</th>
+          <th>Versión Node:</th>
+          <th>Memoria:</th>
+          <th>Node Path</th>
+          <th>Project Path</th>
+          <th>Process ID</th>
+        </tr>
+        <tr>
+          <td>{{ data.commandLineArgs }}</td>
+          <td>{{ data.sistemaOperativo }} </td>
+          <td>{{ data.nodeVersion }}</td>
+          <td>{{ data.memoriaRSS }} </td>
+          <td>{{ data.nodePath }}</td>
+          <td>{{ data.projectPath }} </td>
+          <td>{{ data.processId }} </td>
+        </tr>
+      </thead>
+    </table>
+  </div>
+
+  <script>
+
+    let app = new Vue({
+      el: "#app",
+      data() {
+        return {
+          data: {
+            commandLineArgs: null,
+            sistemaOperativo: null,
+            nodeVersion: null,
+            memoriaRSS: null,
+            nodePath: null,
+            projectPath: null,
+            processId: null,
+          },
+        };
+      },
+      methods: {
+        //logout: function () {
+        //  window.location = '/logout'
+        //}
+      },
+      async mounted() {
+        const urlSessionData = "/api/info";
+        try {
+          let responseSessionData = await axios.get(urlSessionData);
+          this.data = await responseSessionData.data;
+          console.log(this.data)
+        } catch (error) {
+          console.log(error);
+        }
+      },
+    });
+
+  </script>
+
+</body>
+
+</html>

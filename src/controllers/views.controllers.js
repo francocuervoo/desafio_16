@@ -1,5 +1,5 @@
 export const productsView = (req, res) => {
-  res.sendFile("datos.html", { root: "./public" });
+  res.sendFile("productos.html", { root: "./public" });
 };
 
 export const loginView = (req, res) => {
@@ -16,4 +16,8 @@ export const logoutView = (req, res) => {
 
 export const failedLogin = (req, res) => {
   res.sendFile("login-error.html", { root: "./public" });
+};
+
+export const processInfoView = (req, res) => {
+  res.sendFile("process-info.html", { root: "./public" });
 };

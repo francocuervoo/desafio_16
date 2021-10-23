@@ -1,4 +1,6 @@
 import { fakerData } from "../utils/faker.util.js";
+import { sessionData } from "../utils/process.info.util.js";
+import { fork } from "child_process";
 
 export const productsController = (req, res) => {
   const products = fakerData(1, 5);
@@ -18,3 +20,23 @@ export const userFacebook = (req, res) => {
   });
 };
 
+export const infoProcess = (req, res) => {
+  const object = sessionData();
+  res.send(object);
+};
+
+export const randomNumber = (req, res) => {
+  const numero = +req.query.cantidad;
+  const randomsFork = fork("./src/utils/random.numbers.util.js");
+  randomsFork.on("message", (respuestaChild) => {
+    if (respuestaChild == "ready") {
+      randomsFork.send(numero);
+    } else {
+      const resultadoJson = JSON.stringify(respuestaChild);
+      res.status(200).end(resultadoJson);
+    }
+  });
+
+  const object = sessionData();
+  res.send(object);
+};

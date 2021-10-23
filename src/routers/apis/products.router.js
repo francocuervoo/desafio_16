@@ -1,4 +1,3 @@
-// Importar solamente el Router de Express:
 import { Router } from 'express';
 
 import { productsController } from '../../controllers/api.controllers.js';
