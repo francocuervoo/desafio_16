@@ -21,13 +21,12 @@ export const userFacebook = (req, res) => {
 };
 
 export const infoProcess = (req, res) => {
-  const object = sessionData();
-  res.send(object);
+  res.send(sessionData);
 };
 
 export const randomNumber = (req, res) => {
-  const numero = +req.query.cantidad;
-  const randomsFork = fork("./src/utils/random.numbers.util.js");
+  const numero = +req.query.cantidad ? +req.query.cantidad : 100000000;
+  const randomsFork = fork("./src/utils/procesoHijo.js");
   randomsFork.on("message", (respuestaChild) => {
     if (respuestaChild == "ready") {
       randomsFork.send(numero);
@@ -36,7 +35,4 @@ export const randomNumber = (req, res) => {
       res.status(200).end(resultadoJson);
     }
   });
-
-  const object = sessionData();
-  res.send(object);
 };

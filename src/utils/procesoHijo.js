@@ -16,10 +16,3 @@ process.on("message", (numero) => {
   const resultado = listaRepetidosData(numero);
   process.send(resultado);
 });
-
-if (respuestaChild == "ready") {
-  randomsFork.send(numero);
-} else {
-  const resultadoJson = JSON.stringify(respuestaChild);
-  res.status(200).send(resultadoJson);
-}
