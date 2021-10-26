@@ -28,7 +28,9 @@
       <a href="#">{{user.email}}</a>
       <br>
       <br>
-      <a class="btn btn-danger mt-3" href="/logout"><span class="fa fa-sign-out"></span><span> Logout</span></a>
+      <button onclick="reloadPage()">Recargar</button>
+      <a class="btn btn-warning" target="_blank" href="/api/randoms"><span>Random Numbers</span></a>
+
     </div>
 
     <table class="table">
@@ -46,8 +48,6 @@
       </thead>
     </table>
 
-
-    <button onclick="reloadPage()">Recargar</button>
   </div>
 
   <script>
