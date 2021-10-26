@@ -21,7 +21,7 @@ export const userFacebook = (req, res) => {
 };
 
 export const infoProcess = (req, res) => {
-  res.send(sessionData);
+  res.send(sessionData());
 };
 
 export const randomNumber = (req, res) => {

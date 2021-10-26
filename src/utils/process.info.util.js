@@ -13,6 +13,5 @@ export const sessionData = () => {
     processId: pid
 
   };
-
   return data;
 };
