@@ -5,7 +5,7 @@ import app from "./server.js";
 
 import { modo, port } from "./utils/minimist.util.js";
 
-if (modo == "cluster" && cluster.isPrimary) {
+if (modo == "cluster" && cluster.isMaster) {
   const numCPUs = cpus().length;
   console.log(`Numero de procesadores: ${numCPUs}`);
   console.log(`PID Master process: ${process.pid}`);
