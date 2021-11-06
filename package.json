@@ -6,9 +6,9 @@
   "type": "module",
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --inspect src -p 9091",
-    "dev:fork": "nodemon --inspect src -p 9091",
-    "dev:cluster": "nodemon --inspect src -m cluster -p 9092"
+    "start": "node --inspect src/index.js -p 9091",
+    "dev:fork": "nodemon --inspect src/index.js -p 9091",
+    "dev:cluster": "nodemon --inspect src/index.js -m cluster -p 9092"
   },
   "keywords": [],
   "author": "",
