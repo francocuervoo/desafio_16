@@ -33,8 +33,7 @@ app.use(
 // Midllewares de Express
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
-app.use(express.static("public")); /**/
- 
+app.use(express.static("public"));
 
 // Passport
 import passport from "./utils/passport.util.js";
@@ -46,20 +45,18 @@ import apiRouter from "./routers/apis/api.router.js";
 import viewsRouter from "./routers/views/views.router.js";
 app.use("/api", apiRouter).use("/", viewsRouter);
 
-
-
-
 import cors from "cors";
 app.use(cors());
 
 app.set(express.static("public"));
 
 app.get("/", (req, res) => {
-  if (req.isAuthenticated()) {
+  res.redirect("/products")
+/*  if (req.isAuthenticated()) {
     res.redirect("/products");
   } else {
     res.redirect("/login");
-  }
+  }*/
 });
 
 app.get("/logout", (req, res) => {
@@ -73,13 +70,5 @@ app.get("/logout", (req, res) => {
     }
   });
 });
-
-
-/*const server = app.listen(PORT, () => {
-  console.log(
-    `Servidor express corriendo en el puerto http://localhost:${PORT}`
-  );
-});
-server.on("error", (error) => console.log(`Error en servidor ${error}`));*/
 
 export default app;

@@ -1,9 +1,9 @@
-#upstream api {
-#	server localhost:8082;
-#	server localhost:8083;
-#	server localhost:8084;
-#	server localhost:8085;
-#}
+upstream api {
+	server localhost:8082;
+	server localhost:8083;
+	server localhost:8084;
+	server localhost:8085;
+}
 
 server {
 	
