@@ -86,8 +86,13 @@
         const urlSessionFacebook = "/api/user";
         try {
           let responseProducts = await axios.get(urlProducts);
-          let responseGetUser = await axios.get(urlSessionFacebook);
           this.productos = await responseProducts.data;
+
+        } catch (error) {
+          console.log(error);
+        }
+        try {
+          let responseGetUser = await axios.get(urlSessionFacebook);
           this.user = await responseGetUser.data.user;
 
           const usuario = this.user.nombre;
@@ -95,7 +100,7 @@
 
         } catch (error) {
           console.log(error);
-        }
+        }        
       },
     });
 

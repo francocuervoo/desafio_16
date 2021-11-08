@@ -40,13 +40,13 @@ import passport from "./utils/passport.util.js";
 app.use(passport.initialize());
 app.use(passport.session());
 
+import cors from "cors";
+app.use(cors());
+
 // Routers
 import apiRouter from "./routers/apis/api.router.js";
 import viewsRouter from "./routers/views/views.router.js";
 app.use("/api", apiRouter).use("/", viewsRouter);
-
-import cors from "cors";
-app.use(cors());
 
 app.set(express.static("public"));
 
