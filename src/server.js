@@ -6,6 +6,8 @@ const { MONGODB_URI, SECRET, NODE_ENV } = process.env;
 import express from "express";
 const app = express();
 
+import logger from "./logger.js";
+
 // Session
 import session from "express-session";
 import MongoSession from "connect-mongodb-session";
@@ -49,6 +51,11 @@ import viewsRouter from "./routers/views/views.router.js";
 app.use("/api", apiRouter).use("/", viewsRouter);
 
 app.set(express.static("public"));
+
+app.get("*", (req, res) => {
+  logger.warn("Ruta no definida");
+  res.send("Ruta no defeinida")
+})
 
 app.get("/", (req, res) => {
   res.redirect("/products")

@@ -2,6 +2,7 @@ import { fakerData } from "../utils/faker.util.js";
 import { sessionData } from "../utils/process.info.util.js";
 import { fork } from "child_process";
 
+
 export const productsController = (req, res) => {
   const products = fakerData(1, 5);
   res.status(200).send(products);
