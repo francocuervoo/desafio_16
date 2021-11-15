@@ -2,12 +2,14 @@ import log4js from "log4js";
 
 log4js.configure({
   appenders: {
+    logConsole: { type: "console" },
     logFileInfo: { type: "file", filename: "./logs/info.log" },
     logFileWarn: { type: "file", filename: "./logs/warn.log" },
     logFileError: { type: "file", filename: "./logs/error.log" },
   },
 
   categories: {
+    default: { appenders: ["logConsole"], level: "trace" },
     info: { appenders: ["logFileInfo"], level: "info" },
     warn: { appenders: ["logFileWarn"], level: "warn" },
     error: { appenders: ["logFileError"], level: "error" },
