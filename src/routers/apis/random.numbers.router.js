@@ -1,9 +1,9 @@
 import { Router } from "express";
 
-import { randomNumber } from "../../controllers/api.controllers.js";
+import { randomNumbers } from "../../controllers/api.controllers.js";
 
 const userRouter = Router();
 
-userRouter.get("/", randomNumber);
+userRouter.get("/", randomNumbers);
 
 export default userRouter;

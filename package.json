@@ -5,10 +5,8 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
-    "test": "echo \"Error: no test specified\" && exit 1",
-    "start": "node --inspect src/index.js -p 9091",
-    "dev:fork": "nodemon --inspect src/index.js -p 8081",
-    "dev:cluster": "nodemon --inspect src/index.js -m cluster -p 9092"
+    "start": "NODE_ENV=production node --inspect ./src/index.js -m fork -p 8080",
+    "dev:fork": "NODE_ENV=development node --inspect ./src/index.js -m fork -p 8080"
   },
   "keywords": [],
   "author": "",

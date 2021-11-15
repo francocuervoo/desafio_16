@@ -6,7 +6,7 @@ const { MONGODB_URI, SECRET, NODE_ENV } = process.env;
 import express from "express";
 const app = express();
 
-import logger from "./logger.js";
+import { logWarning } from "./utils/logger.util.js";
 
 // Session
 import session from "express-session";
@@ -53,7 +53,7 @@ app.use("/api", apiRouter).use("/", viewsRouter);
 app.set(express.static("public"));
 
 app.get("*", (req, res) => {
-  logger.warn("Ruta no definida");
+  logWarning("Ruta no definida");
   res.send("Ruta no defeinida")
 })
 

@@ -5,21 +5,21 @@ import app from "./server.js";
 
 import { modo, port } from "./utils/minimist.util.js";
 
-import logger from "./logger.js";
+import { logInfo, logError } from "./utils/logger.util.js";
 
 if (modo == "cluster" && cluster.isMaster) {
-  logger.info("Modo Cluster");
+  logInfo("Modo Cluster");
   const numCPUs = cpus().length;
-  logger.info(`Numero de procesadores: ${numCPUs}`);
-  logger.info(`PID Master process: ${process.pid}`);
+  logInfo(`Numero de procesadores: ${numCPUs}`);
+  logInfo(`PID Master process: ${process.pid}`);
 
   for (let i = 1; i <= numCPUs; i++) {
     cluster.fork();
-    logger.info(`CPU: ${i}`);
+    logInfo(`CPU: ${i}`);
   }
 
   cluster.on("exit", (worker) => {
-    logger.info(
+    logInfo(
       "Worker",
       worker.process.pid,
       "died",
@@ -28,12 +28,12 @@ if (modo == "cluster" && cluster.isMaster) {
     cluster.fork();
   });
 } else {
-  logger.info("Modo", modo);
+  logInfo("Modo", modo);
   process.on("exit", (code) => {
-    logger.error("Salida con código de error: ", code);
+    logError("Salida con código de error: ", code);
   });
 
   app.listen(port, () => {
-    logger.info(`Server running on: http://localhost:${port}`);
+    logInfo(`Server running on: http://localhost:${port}`);
   });
 }

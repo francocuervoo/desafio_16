@@ -1,4 +1,4 @@
-import log4js from "log4js";
+/*import log4js from "log4js";
 
 log4js.configure({
   appenders: {
@@ -37,4 +37,4 @@ log4js.configure({
 
 let logger = log4js.getLogger();
 
-export default logger;
+export default logger;*/
