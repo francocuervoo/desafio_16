@@ -34,6 +34,8 @@ if (modo == "cluster" && cluster.isMaster) {
   });
 
   app.listen(port, () => {
-    logInfo(`Server running on: http://localhost:${port}`);
+    let msg = `Server running on: http://localhost:${port}`;
+    process.env.NODE_ENV == 'development' ? console.log(msg) : logInfo(msg);
   });
+
 }
