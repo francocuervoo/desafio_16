@@ -5,7 +5,9 @@
   "main": "index.js",
   "type": "module",
   "scripts": {
+    "test": "node autocannon/benchmark.js",
     "start": "NODE_ENV=production node --inspect ./src/index.js -m fork -p 8080",
+    "start0x": "0x ./src/index.js",
     "dev:fork": "NODE_ENV=development node --inspect ./src/index.js -m fork -p 8080"
   },
   "keywords": [],
@@ -16,6 +18,7 @@
     "nodemon": "^2.0.12"
   },
   "dependencies": {
+    "autocannon": "^7.5.0",
     "compression": "^1.7.4",
     "connect-mongodb-session": "^3.1.1",
     "cookie-parser": "^1.4.5",
