@@ -7,7 +7,7 @@ import { modo, port } from "./utils/minimist.util.js";
 
 import { logInfo, logError } from "./utils/logger.util.js";
 
-if (modo == "cluster" && cluster.isMaster) {
+if (modo === "cluster" && cluster.isMaster) {
   logInfo("Modo Cluster");
   const numCPUs = cpus().length;
   logInfo(`Numero de procesadores: ${numCPUs}`);

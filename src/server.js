@@ -54,16 +54,16 @@ app.set(express.static("public"));
 
 app.get("*", (req, res) => {
   logWarning("Ruta no definida");
-  res.send("Ruta no defeinida")
-})
+  res.send("Ruta no defeinida");
+});
 
 app.get("/", (req, res) => {
-  res.redirect("/products")
-/*  if (req.isAuthenticated()) {
+  res.redirect("/products");
+  if (req.isAuthenticated()) {
     res.redirect("/products");
   } else {
     res.redirect("/login");
-  }*/
+  }
 });
 
 app.get("/logout", (req, res) => {

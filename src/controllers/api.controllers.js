@@ -6,20 +6,29 @@ import { listaRandoms } from "../utils/randoms.util.js";
 
 const dev = process.env.NODE_ENV == "development";
 
+export const randomsController = (req, res) => {
+  try {
+    const cantidad = +req.query.cantidad || 1e8;
+    const info = `Cantidad: ${cantidad}`;
+    dev ? console.log(info) : logInfo(info);
+    const resultado = listaRandoms(cantidad);
+    // Testear el rendimiento con y sin este console.log:
+    dev && console.log(resultado);
+    res.send({resultado})
+  } catch (error) { 
+    dev ? console.log(error) : logError(error);
+  }  
+}
+
+
 export const randomNumbers = (req, res) => {
   try {
     const cantidad = +req.query.cantidad || 1e8;
-
     const info = `Cantidad: ${cantidad}`;
-
     dev ? console.log(info) : logInfo(info);
-
     const resultado = listaRandoms(cantidad);
-
     // Testear el rendimiento con y sin este console.log:
-
     dev && console.log(resultado);
-
     res.send({ resultado });
   } catch (error) {
     dev ? console.log(error) : logError(error);
@@ -27,8 +36,14 @@ export const randomNumbers = (req, res) => {
 };
 
 export const productsController = (req, res) => {
-  const products = fakerData(1, 5);
-  res.status(200).send(products);
+  try {
+    const products = fakerData(1,5);
+    // Probar el logger de errores con un error intencional:
+    //consoul.log('Error intencional'); // ReferenceError: consoul is not defined
+    res.status(200).send(products)
+  } catch (error) { 
+    dev ? console.log(error) : logError(error) 
+  }   
 };
 
 export const userFacebook = (req, res) => {
@@ -53,18 +68,6 @@ export const userFacebook = (req, res) => {
 };
 
 export const infoProcess = (req, res) => {
+  dev && console.log(sessionData());  
   res.send(sessionData());
 };
-
-/*export const randomNumber = (req, res) => {
-  const numero = +req.query.cantidad ? +req.query.cantidad : 100000000;
-  const randomsFork = fork("./src/utils/procesoHijo.js");
-  randomsFork.on("message", (respuestaChild) => {
-    if (respuestaChild == "ready") {
-      randomsFork.send(numero);
-    } else {
-      const resultadoJson = JSON.stringify(respuestaChild);
-      res.status(200).end(resultadoJson);
-    }
-  });
-};*/

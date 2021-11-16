@@ -1,10 +1,9 @@
 export const authMiddleware = (req, res, next) => {
-  next()
-  /*if (req.isAuthenticated()) {
+  if (req.isAuthenticated()) {
     next();
   } else {
     res.redirect("/login");
-  }*/
+  }
 };
 
 export const logoutMiddleware = (req, res, next) => {
